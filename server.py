@@ -199,7 +199,7 @@ def answer_question(question):
 
     is_revenue = any(
         word in q for word in (
-            "revenue", "sales", "earned", "earnings", "turnover",
+            "revenue", "sales", "earn", "earned", "earnings", "turnover",
             "spend", "spent", "spending", "purchase value"
         )
     )
