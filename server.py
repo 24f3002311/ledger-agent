@@ -248,7 +248,18 @@ def answer_question(question):
 
     # Order counts.
     if is_count:
-        if "customer" in q and "order" not in q:
+        customer_count_query = (
+            "customer" in q and (
+                any(word in q for word in ("different", "distinct", "unique"))
+                or any(phrase in q for phrase in (
+                    "customers placed", "customers have",
+                    "customers bought", "customers purchased",
+                    "customer placed", "customer bought",
+                    "customer purchased"
+                ))
+            )
+        )
+        if customer_count_query:
             return len({o["customer"] for o in relevant})
 
         if "unit" in q:
