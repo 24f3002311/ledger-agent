@@ -246,6 +246,18 @@ def answer_question(question):
             if grouped:
                 return max(grouped, key=grouped.get)
 
+    # Average order value.
+    if "average" in q or "avg" in q:
+        if not relevant:
+            return 0.0
+
+        total = sum(
+            (amount_usd(o) for o in relevant),
+            Decimal("0")
+        )
+
+        return money(total / len(relevant))
+
     # Order counts.
     if is_count:
         customer_count_query = (
@@ -270,18 +282,6 @@ def answer_question(question):
     # Units sold.
     if is_units:
         return sum(int(o["qty"]) for o in relevant)
-
-    # Average order value.
-    if "average" in q or "avg" in q:
-        if not relevant:
-            return 0.0
-
-        total = sum(
-            (amount_usd(o) for o in relevant),
-            Decimal("0")
-        )
-
-        return money(total / len(relevant))
 
     # Total money.
     total = sum(
